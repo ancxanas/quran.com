@@ -1,24 +1,24 @@
-"use client";
+"use client"
 
-import { useSurahs } from "../hooks/useSurahs";
-import { Surah } from "../types/surah";
-import Link from "next/link";
+import { useSurahs } from "../hooks/useSurahs"
+import { Surah } from "../types/surah"
+import Link from "next/link"
 
 interface SurahListProps {
-  initialSurahs: Surah[];
+  initialSurahs: Surah[]
 }
 
 export default function SurahList({ initialSurahs }: SurahListProps) {
-  const { data: surahs, isLoading, error } = useSurahs();
+  const { data: surahs, isLoading, error } = useSurahs()
 
-  const displaySurahs = surahs || initialSurahs;
+  const displaySurahs = surahs || initialSurahs
 
   if (error) {
-    return <p role="alert">Failed to load surahs: {error.message}</p>;
+    return <p role="alert">Failed to load surahs: {error.message}</p>
   }
 
   if (isLoading && !displaySurahs) {
-    return <p>Loading...</p>;
+    return <p>Loading...</p>
   }
 
   return (
@@ -63,5 +63,5 @@ export default function SurahList({ initialSurahs }: SurahListProps) {
         ))}
       </section>
     </main>
-  );
+  )
 }
