@@ -18,8 +18,6 @@ export async function GET(
 
     const response = await getSurahVerses(id, page, perPage);
 
-    console.dir(response, { depth: null });
-
     return NextResponse.json({
       data: response.verses,
       pagination: response.pagination,
