@@ -1,7 +1,7 @@
 export function SurahListShimmer() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-3">
-      {Array.from({ length: 12 }).map((_, i) => (
+      {Array.from({ length: 24 }).map((_, i) => (
         <div
           key={i}
           className="flex justify-between items-center rounded p-3 border border-border bg-surface h-18"

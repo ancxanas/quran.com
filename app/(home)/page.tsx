@@ -1,6 +1,6 @@
-import SurahList from "./components/SurahList/SurahList";
-import HeaderIcon from "../public/icons/header.svg";
-import { getSurahList } from "./lib/quran-api";
+import SurahList from "./../components/SurahList/SurahList";
+import HeaderIcon from "../../public/icons/header.svg";
+import { getSurahList } from "./../lib/quran-api";
 
 export default async function Home() {
   let initialSurahs;
