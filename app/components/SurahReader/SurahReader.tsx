@@ -69,7 +69,7 @@ export default function SurahReader({ chapterId }: SurahReaderProps) {
 
   if (status === "pending") {
     return (
-      <main className="w-full py-4 min-h-screen">
+      <main className="w-full py-4 min-h-screen flex flex-col justify-center">
         <SurahPageShimmer />
       </main>
     );
