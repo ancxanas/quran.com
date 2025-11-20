@@ -1,4 +1,4 @@
-import SurahList from "./components/SurahList";
+import SurahList from "./components/SurahList/SurahList";
 import HeaderIcon from "../public/icons/header.svg";
 import { getSurahList } from "./lib/quran-api";
 
