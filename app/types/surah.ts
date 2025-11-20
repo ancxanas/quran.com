@@ -45,7 +45,7 @@ export interface PageLine {
 
 export interface SurahPageData {
   pageNumber: number;
-  verses: Verse[];
+  words: Word[];
   isComplete: boolean;
 }
 

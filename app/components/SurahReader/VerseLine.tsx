@@ -6,15 +6,12 @@ interface VerseLineProps {
 }
 
 export function VerseLine({ words }: VerseLineProps) {
-  console.log(
-    "words from mushaf",
-    words.sort((a, b) => a.id - b.id),
-  );
   return (
-    <span className="mushaf-verse-line">
+    <span className="flex justify-between ">
       {words.map((word, index) => (
         <Fragment key={word.id}>
           <span>{word.text_qpc_hafs}</span>
+
           {index < words.length - 1 && <span aria-hidden>{"\u200C"}</span>}
         </Fragment>
       ))}

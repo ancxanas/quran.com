@@ -59,7 +59,7 @@ export async function getSurahVerses(
     throw new Error(`Invalid chapter number: ${chapterId}`);
   }
 
-  const wordFields = "text_qpc_hafs";
+  const wordFields = "text_qpc_hafs,verse_key,v1_page,v2_page";
 
   try {
     const response = await authenticatedFetch(

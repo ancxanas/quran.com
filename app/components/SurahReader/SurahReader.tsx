@@ -1,7 +1,6 @@
 "use client";
 
 import { useInfiniteVerses } from "@/app/hooks/useInfiniteVerses";
-import { prepareSurahPages } from "@/app/lib/surah-helpers";
 import { SurahReaderProps } from "@/app/types/surah";
 import { useEffect, useRef, useMemo, Fragment } from "react";
 import { SurahPageShimmer } from "./SurahPageShimmer";
@@ -9,12 +8,12 @@ import { SurahErrorMessage } from "./SurahErrorMessage";
 import { SurahPage } from "./SurahPage";
 import { useSurah } from "@/app/hooks/useSurahs";
 import Bismillah from "../../../public/icons/bismillah.svg";
+import { isPageComplete } from "@/app/lib/utils";
 
 const PAGE_SIZE = 20;
 
 const INTERSECTION_CONFIG = {
   threshold: 0.1,
-  rootMargin: "200px 0px",
 };
 
 export default function SurahReader({ chapterId }: SurahReaderProps) {
@@ -28,11 +27,6 @@ export default function SurahReader({ chapterId }: SurahReaderProps) {
   } = useInfiniteVerses(chapterId, PAGE_SIZE);
 
   const loadTriggerRef = useRef<HTMLDivElement>(null);
-
-  const pages = useMemo(() => {
-    const verses = pagesData?.pages.flatMap((page) => page.data) ?? [];
-    return prepareSurahPages(verses, hasNextPage ?? false);
-  }, [pagesData, hasNextPage]);
 
   useEffect(() => {
     if (!hasNextPage || isFetchingNextPage) return;
@@ -56,9 +50,27 @@ export default function SurahReader({ chapterId }: SurahReaderProps) {
     };
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
+  const pages = useMemo(() => {
+    const verses = pagesData?.pages.flatMap((data) => data.data) ?? [];
+    const words = verses.flatMap((v) => v.words);
+    const grouped = Object.groupBy(words, (w) => w.v1_page);
+
+    const mushafPages = Object.keys(grouped)
+      .map(Number)
+      .sort((a, b) => a - b);
+
+    const maxLoaded = Math.max(0, ...mushafPages);
+
+    return mushafPages.map((pageNumber) => ({
+      pageNumber,
+      words: grouped[pageNumber],
+      isComplete: pageNumber < maxLoaded || !hasNextPage,
+    }));
+  }, [pagesData, hasNextPage]);
+
   if (status === "pending") {
     return (
-      <main className="mushaf-main">
+      <main className="w-full py-4 min-h-screen">
         <SurahPageShimmer />
       </main>
     );
@@ -66,17 +78,17 @@ export default function SurahReader({ chapterId }: SurahReaderProps) {
 
   if (status === "error") {
     return (
-      <main className="mushaf-main">
+      <main className="w-full py-4 min-h-screen">
         <SurahErrorMessage />
       </main>
     );
   }
 
   return (
-    <main className="mushaf-main">
-      <header className="flex justify-center mushaf-header-container">
+    <main className="flex flex-col justify-center  w-full py-4 min-h-screen">
+      <header className="flex justify-center @container w-full max-w-full mb-4">
         <h1
-          className="font-surah-list rtl:flex gap-0.5 text-text-primary mushaf-header-title"
+          className="font-surah-list rtl:flex text-text-primary  flex gap-1 items-center justify-center text-[2rem] @[350px]:text-[2.6rem] @[400px]:text-[2.6rem] @[450px]:text-[2.6rem] @[500px]:text-[2.6rem] @[550px]:text-[2.8rem] @[600px]:text-[2.8rem] @[650px]:text-[2.8rem] @[750px]:text-[3rem] @[800px]:text-[3.5rem]"
           dir="rtl"
         >
           <span>surah-icon</span>
@@ -84,22 +96,25 @@ export default function SurahReader({ chapterId }: SurahReaderProps) {
         </h1>
       </header>
 
-      <article aria-label={`Chapter ${chapterId}`} className="mushaf-article">
+      <article
+        aria-label={`Chapter ${chapterId}`}
+        className="flex flex-col items-center gap-6 md:gap-8"
+      >
         {surah?.bismillah_pre && (
-          <div className="mushaf-bismillah-container">
-            <Bismillah className="text-text-primary mushaf-bismillah-svg" />
+          <div className="@container w-full max-w-full sm:max-w-112 md:max-w-128 lg:max-w-136 xl:max-w-xl flex justify-center items-center">
+            <Bismillah className="text-text-primary w-full h-auto max-w-[200px] @[350px]:max-w-[200px] @[400px]:max-w-[220px] @[450px]:max-w-60 @[500px]:max-w-[300px] @[550px]:max-w-[320px] @[600px]:max-w-[360px] @[650px]:max-w-[380px] @[750px]:max-w-[400px] @[800px]:max-w-[420px] object-contain fill-current" />
           </div>
         )}
 
-        {pages.map((page) => (
-          <SurahPage key={page.pageNumber} page={page} />
+        {pages.map((pageItem) => (
+          <SurahPage key={pageItem.pageNumber} page={pageItem} />
         ))}
 
         {hasNextPage && (
           <div
             ref={loadTriggerRef}
             aria-hidden="true"
-            className="mushaf-load-trigger"
+            className="h-10"
             role="status"
             aria-label="Loading more pages..."
           ></div>
