@@ -47,6 +47,7 @@ export interface SurahPageData {
   pageNumber: number;
   words: Word[];
   isComplete: boolean;
+  chapterId: number;
 }
 
 export interface SurahReaderProps {

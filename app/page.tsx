@@ -1,16 +1,16 @@
 import SurahList from "./components/SurahList";
 import HeaderIcon from "../public/icons/header.svg";
+import { getSurahList } from "./lib/quran-api";
 
 export default async function Home() {
-  const response = await fetch("http://localhost:3000/api/chapters", {
-    next: { revalidate: 86400 },
-  });
+  let initialSurahs;
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch surahs");
+  try {
+    initialSurahs = await getSurahList();
+  } catch (error) {
+    console.error("Failed to load surahs", error);
+    throw new Error("Failed to fetch Surahs");
   }
-
-  const { data: initialSurahs } = await response.json();
 
   return (
     <main className="p-6">

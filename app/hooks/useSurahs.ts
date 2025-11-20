@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+import { Surah } from "../types/surah";
 
-export function useSurahs() {
+export function useSurahs(initialData: Surah[]) {
   return useQuery({
     queryKey: ["surahs"],
     queryFn: async () => {
@@ -12,7 +13,8 @@ export function useSurahs() {
       const data = await response.json();
       return data.data;
     },
-    staleTime: 1000 * 60 * 60,
+    initialData: initialData,
+    staleTime: 1000 * 60 * 60 * 24,
   });
 }
 

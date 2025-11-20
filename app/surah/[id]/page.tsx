@@ -1,9 +1,11 @@
 import { SurahReader } from "@/app/components/SurahReader";
+import { getSurahDetails } from "@/app/lib/quran-api";
+import { Metadata } from "next";
 
 interface SurahPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -12,6 +14,21 @@ export async function generateStaticParams() {
   return surahs.map((id) => ({
     id: id.toString(),
   }));
+}
+
+export async function generateMetadata({ params }: SurahPageProps): Promise<Metadata> {
+  const { id } = await params;
+  const chapterId = parseInt(id, 10);
+
+  try {
+    const surah = await getSurahDetails(chapterId);
+    return {
+      title: `${surah.name_simple} | Quran.com`,
+      description: `Read Surah ${surah.name_simple}`,
+    };
+  } catch (error) {
+    return { title: "Quran.com" };
+  }
 }
 
 export default async function SurahPage({ params }: SurahPageProps) {

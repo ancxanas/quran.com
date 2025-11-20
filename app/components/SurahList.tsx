@@ -1,24 +1,22 @@
-"use client"
+"use client";
 
-import { useSurahs } from "../hooks/useSurahs"
-import { Surah } from "../types/surah"
-import Link from "next/link"
+import { useSurahs } from "../hooks/useSurahs";
+import { Surah } from "../types/surah";
+import Link from "next/link";
 
 interface SurahListProps {
-  initialSurahs: Surah[]
+  initialSurahs: Surah[];
 }
 
 export default function SurahList({ initialSurahs }: SurahListProps) {
-  const { data: surahs, isLoading, error } = useSurahs()
-
-  const displaySurahs = surahs || initialSurahs
+  const { data: surahs, isLoading, error } = useSurahs(initialSurahs);
 
   if (error) {
-    return <p role="alert">Failed to load surahs: {error.message}</p>
+    return <p role="alert">Failed to load surahs: {error.message}</p>;
   }
 
-  if (isLoading && !displaySurahs) {
-    return <p>Loading...</p>
+  if (isLoading && !surahs) {
+    return <p>Loading...</p>;
   }
 
   return (
@@ -27,7 +25,7 @@ export default function SurahList({ initialSurahs }: SurahListProps) {
         aria-label="List of Surahs"
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-3"
       >
-        {displaySurahs.map((surah: Surah) => (
+        {surahs.map((surah: Surah) => (
           <Link key={surah.id} href={`/surah/${surah.id}`}>
             <article
               key={surah.id}
@@ -63,5 +61,5 @@ export default function SurahList({ initialSurahs }: SurahListProps) {
         ))}
       </section>
     </main>
-  )
+  );
 }

@@ -8,7 +8,6 @@ import { SurahErrorMessage } from "./SurahErrorMessage";
 import { SurahPage } from "./SurahPage";
 import { useSurah } from "@/app/hooks/useSurahs";
 import Bismillah from "../../../public/icons/bismillah.svg";
-import { isPageComplete } from "@/app/lib/utils";
 
 const PAGE_SIZE = 20;
 
@@ -54,7 +53,6 @@ export default function SurahReader({ chapterId }: SurahReaderProps) {
     const verses = pagesData?.pages.flatMap((data) => data.data) ?? [];
     const words = verses.flatMap((v) => v.words);
     const grouped = Object.groupBy(words, (w) => w.v1_page);
-
     const mushafPages = Object.keys(grouped)
       .map(Number)
       .sort((a, b) => a - b);
@@ -63,8 +61,9 @@ export default function SurahReader({ chapterId }: SurahReaderProps) {
 
     return mushafPages.map((pageNumber) => ({
       pageNumber,
-      words: grouped[pageNumber],
+      words: grouped[pageNumber] ?? [],
       isComplete: pageNumber < maxLoaded || !hasNextPage,
+      chapterId,
     }));
   }, [pagesData, hasNextPage]);
 
