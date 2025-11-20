@@ -23,6 +23,7 @@ export default function SurahReader({ chapterId }: SurahReaderProps) {
     hasNextPage,
     isFetchingNextPage,
     status,
+    refetch,
   } = useInfiniteVerses(chapterId, PAGE_SIZE);
 
   const loadTriggerRef = useRef<HTMLDivElement>(null);
@@ -80,7 +81,7 @@ export default function SurahReader({ chapterId }: SurahReaderProps) {
   if (status === "error") {
     return (
       <main className="w-full py-4 min-h-screen">
-        <SurahErrorMessage />
+        <SurahErrorMessage refetch={refetch} />
       </main>
     );
   }

@@ -1,13 +1,20 @@
+import { QueryObserverResult } from "@tanstack/react-query";
+
 interface SurahErrorMessageProps {
-  message?: string;
+  refetch: () => Promise<QueryObserverResult>;
 }
 
-export function SurahErrorMessage({
-  message = "Error loading verses. Please try again later.",
-}: SurahErrorMessageProps) {
+export function SurahErrorMessage({ refetch }: SurahErrorMessageProps) {
   return (
-    <section role="alert" className="p-4 text-red-600 text-center">
-      <p>{message}</p>
-    </section>
+    <main className="flex flex-col items-center justify-center min-h-screen gap-6 p-4 text-center">
+      <h1 className="text-xl font-bold text-text-primary font-figtree">Unable to load chapters</h1>
+
+      <button
+        onClick={() => refetch()}
+        className="px-6 py-2 rounded border border-border bg-surface text-text-primary font-figtree transition-colors hover:border-text-primary"
+      >
+        Try Again
+      </button>
+    </main>
   );
 }
