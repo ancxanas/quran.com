@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { getSurahVerses } from "@/app/lib/quran-api";
 
-export async function GET(request: Request, { params }: { params: { chapterId: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ chapterId: string }> },
+) {
   try {
     const { chapterId } = await params;
     const id = parseInt(chapterId);
@@ -14,6 +17,8 @@ export async function GET(request: Request, { params }: { params: { chapterId: s
     }
 
     const response = await getSurahVerses(id, page, perPage);
+
+    console.dir(response, { depth: null });
 
     return NextResponse.json({
       data: response.verses,

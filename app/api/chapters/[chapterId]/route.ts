@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { getSurahDetails } from "@/app/lib/quran-api";
 
-export async function GET(_request: Request, { params }: { params: { chapterId: string } }) {
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ chapterId: string }> },
+) {
   try {
     const { chapterId } = await params;
     const id = parseInt(chapterId, 10);
