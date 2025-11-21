@@ -29,7 +29,7 @@ export function SurahPage({ page }: SurahPageProps) {
       className="@container w-full max-w-full sm:max-w-112 md:max-w-128 lg:max-w-136 xl:max-w-xl px-4 sm:px-6"
     >
       <div
-        className={`font-kfgqpc flex flex-col text-[1.1rem] @[350px]:text-[1.3rem] @[400px]:text-[1.5rem] @[450px]:text-[1.7rem] @[500px]:text-[1.8rem] @[550px]:text-[2rem] @[600px]:text-[2.1rem] @[650px]:text-[2.3rem] @[750px]:text-[2.5rem] @[800px]:text-[3rem] leading-relaxed`}
+        className={`font-kfgqpc flex flex-col text-[1.1rem] @[350px]:text-[1.2rem] @[400px]:text-[1.4rem] @[450px]:text-[1.6rem] @[500px]:text-[1.8rem] @[550px]:text-[1.9rem] @[600px]:text-[2.1rem] @[650px]:text-[2.3rem] @[750px]:text-[2.5rem] @[800px]:text-[3rem] leading-relaxed`}
         lang="ar"
         dir="rtl"
         role="group"
