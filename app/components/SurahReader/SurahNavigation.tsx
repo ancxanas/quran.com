@@ -28,11 +28,11 @@ export function SurahNavigation({ chapterId }: SurahNavigationProps) {
       aria-label="Chapter Navigation"
       className="@container w-full max-w-full sm:max-w-112 md:max-w-128 lg:max-w-136 xl:max-w-xl px-4 sm:px-6 mx-auto gap-1 flex font-figtree"
     >
-      {prevId > 0 && <NavButton href={`/surah/${prevId}`}>Previous Surah</NavButton>}
+      {prevId > 0 && <NavButton href={`/chapters/${prevId}`}>Previous Surah</NavButton>}
 
       <NavButton href="/">Home</NavButton>
 
-      {nextId <= 114 && <NavButton href={`/surah/${nextId}`}>Next Surah</NavButton>}
+      {nextId <= 114 && <NavButton href={`/chapters/${nextId}`}>Next Surah</NavButton>}
     </nav>
   );
 }
