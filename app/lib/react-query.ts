@@ -1,4 +1,4 @@
-import { QueryClient } from "@tanstack/react-query"
+import { QueryClient } from "@tanstack/react-query";
 
 export function makeQueryClient() {
   return new QueryClient({
@@ -9,19 +9,19 @@ export function makeQueryClient() {
         retryOnMount: false,
       },
     },
-  })
+  });
 }
 
-let browserQueryClient: QueryClient | undefined = undefined
+let browserQueryClient: QueryClient | undefined = undefined;
 
 export function getQueryClient() {
   if (typeof window === "undefined") {
-    return makeQueryClient()
+    return makeQueryClient();
   } else {
     if (!browserQueryClient) {
-      browserQueryClient = makeQueryClient()
+      browserQueryClient = makeQueryClient();
     }
 
-    return browserQueryClient
+    return browserQueryClient;
   }
 }
