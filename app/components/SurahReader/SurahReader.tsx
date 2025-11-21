@@ -8,10 +8,12 @@ import { SurahErrorMessage } from "./SurahErrorMessage";
 import { SurahPage } from "./SurahPage";
 import { useSurah } from "@/app/hooks/useSurahs";
 import Bismillah from "../../../public/icons/bismillah.svg";
+import { SurahNavigation } from "./SurahNavigation";
 
 const PAGE_SIZE = 20;
 
 const INTERSECTION_CONFIG = {
+  rootMargin: "100%",
   threshold: 0.1,
 };
 
@@ -100,7 +102,7 @@ export default function SurahReader({ chapterId }: SurahReaderProps) {
 
       <article
         aria-label={`Chapter ${chapterId}`}
-        className="flex flex-col items-center gap-6 md:gap-8"
+        className="flex flex-col items-center gap-4 md:gap-8"
       >
         {surah?.bismillah_pre && (
           <div className="@container w-full max-w-full sm:max-w-112 md:max-w-128 lg:max-w-136 xl:max-w-xl flex justify-center items-center">
@@ -123,6 +125,8 @@ export default function SurahReader({ chapterId }: SurahReaderProps) {
         )}
 
         {isFetchingNextPage && <SurahPageShimmer linesPerPage={15} />}
+
+        {!isFetchingNextPage && !hasNextPage && <SurahNavigation chapterId={chapterId} />}
       </article>
     </main>
   );
