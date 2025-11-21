@@ -10,7 +10,6 @@ interface VerseLineProps {
 
 export function VerseLine({ words, chapterId, pageNumber }: VerseLineProps) {
   const centerLine = SURAH_LAYOUT_CONFIG[chapterId]?.includes(pageNumber) ?? false;
-  console.log(chapterId, pageNumber);
   return (
     <span className={`flex ${centerLine ? "justify-center gap-1" : "justify-between"}`}>
       {words.map((word, index) => (
