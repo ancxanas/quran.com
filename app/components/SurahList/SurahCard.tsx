@@ -7,7 +7,7 @@ interface SurahCardProps {
 
 export function SurahCard({ surah }: SurahCardProps) {
   return (
-    <Link href={`/surah/${surah.id}`}>
+    <Link href={`/chapters/${surah.id}`}>
       <article className="group flex justify-between items-center rounded p-3 border border-border bg-surface transition hover:border-text-primary">
         <header>
           <p className="flex items-center justify-center w-10 h-10 rounded-md rotate-45 me-6 bg-highlight group-hover:bg-background-secondary">
