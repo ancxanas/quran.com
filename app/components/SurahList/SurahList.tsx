@@ -1,10 +1,11 @@
 "use client";
 
+import { useState, useMemo } from "react";
 import { SurahCard } from "./SurahCard";
 import { SurahListShimmer } from "./SurahListShimmer";
 import { useSurahs } from "../../hooks/useSurahs";
 import { Surah } from "../../types/surah";
-import Link from "next/link";
+import { SearchBar } from "./SearchBar";
 
 interface SurahListProps {
   initialSurahs: Surah[];
@@ -12,6 +13,23 @@ interface SurahListProps {
 
 export default function SurahList({ initialSurahs }: SurahListProps) {
   const { data: surahs, isLoading, error, refetch } = useSurahs(initialSurahs);
+
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const filteredSurahs = useMemo(() => {
+    const list = surahs || [];
+    if (!searchQuery.trim()) return list;
+
+    const lowerQuery = searchQuery.toLowerCase();
+
+    return list.filter((surah: Surah) => {
+      return (
+        String(surah.id).includes(lowerQuery) ||
+        surah.name_simple.toLowerCase().includes(lowerQuery) ||
+        surah.translated_name.name.toLowerCase().includes(lowerQuery)
+      );
+    });
+  }, [searchQuery, surahs]);
 
   if (error) {
     <main className="flex flex-col items-center justify-center min-h-screen gap-6 p-4 text-center">
@@ -32,14 +50,22 @@ export default function SurahList({ initialSurahs }: SurahListProps) {
 
   return (
     <main>
-      <section
-        aria-label="List of Surahs"
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-1"
-      >
-        {surahs.map((surah: Surah) => (
-          <SurahCard key={surah.id} surah={surah} />
-        ))}
-      </section>
+      <SearchBar value={searchQuery} onChange={setSearchQuery} />
+
+      {filteredSurahs.length ? (
+        <section
+          aria-label="List of Surahs"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-1"
+        >
+          {filteredSurahs.map((surah: Surah) => (
+            <SurahCard key={surah.id} surah={surah} />
+          ))}
+        </section>
+      ) : (
+        <div className="text-center py-12">
+          <p className="text-text-secondary font-figtree text-lg">No Surahs found matching</p>
+        </div>
+      )}
     </main>
   );
 }
