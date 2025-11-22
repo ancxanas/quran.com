@@ -37,7 +37,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${figtree.variable} ${kfgqpc.variable} ${surahList.variable}`}>
+    <html
+      lang="en"
+      className={`${figtree.variable} ${kfgqpc.variable} ${surahList.variable} [scrollbar-gutter:stable]`}
+    >
       <body className="antialiased">
         <Providers>{children}</Providers>
       </body>

@@ -66,9 +66,9 @@ export default function SurahList({ initialSurahs }: SurahListProps) {
           ))}
         </section>
       ) : (
-        <div className="text-center py-12">
+        <section className="text-center py-12 ">
           <p className="text-text-secondary font-figtree text-lg">No Surahs found matching</p>
-        </div>
+        </section>
       )}
     </main>
   );
