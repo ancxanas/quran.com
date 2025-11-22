@@ -89,7 +89,7 @@ export default function SurahReader({ chapterId }: SurahReaderProps) {
   }
 
   return (
-    <main className="flex flex-col justify-center  w-full py-4 min-h-screen">
+    <main role="main" className="flex flex-col justify-center  w-full py-4 min-h-screen">
       <header className="flex justify-center @container w-full max-w-full mb-4">
         <h1
           className="font-surah-list rtl:flex text-text-primary  flex gap-1 items-center justify-center text-[2rem] @[350px]:text-[2.6rem] @[400px]:text-[2.6rem] @[450px]:text-[2.6rem] @[500px]:text-[2.6rem] @[550px]:text-[2.8rem] @[600px]:text-[2.8rem] @[650px]:text-[2.8rem] @[750px]:text-[3rem] @[800px]:text-[3.5rem]"

@@ -53,7 +53,7 @@ export default function SurahList({ initialSurahs }: SurahListProps) {
   }
 
   return (
-    <main>
+    <main role="main">
       <SearchBar value={searchQuery} onChange={setSearchQuery} />
 
       {filteredSurahs.length ? (
